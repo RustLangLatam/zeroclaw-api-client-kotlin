@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/RustLangLatam/zeroclaw-api-client-kotlin/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/RustLangLatam/zeroclaw-api-client-kotlin/ci.yml?branch=main&label=build" alt="Build Status" /></a>
-  <a href="https://jitpack.io/#RustLangLatam/zeroclaw-api-client-kotlin"><img src="https://jitpack.io/v/RustLangLatam/zeroclaw-api-client-kotlin.svg" alt="JitPack" /></a>
+  <a href="https://central.sonatype.com/artifact/io.github.rustlanglatam/zeroclaw-api-client"><img src="https://img.shields.io/maven-central/v/io.github.rustlanglatam/zeroclaw-api-client" alt="Maven Central" /></a>
   <a href="https://github.com/RustLangLatam/zeroclaw-api-client-kotlin/blob/main/LICENSE-APACHE"><img src="https://img.shields.io/badge/license-MIT%20OR%20Apache%202.0-blue.svg" alt="License" /></a>
   <img src="https://img.shields.io/badge/JVM-17%2B-e76f00" alt="JVM 17+" />
   <img src="https://img.shields.io/badge/Android-API%2026%2B-3ddc84" alt="Android API 26+" />
@@ -35,15 +35,11 @@ Android API 26+, and Java code can use it too.
 > endorsed by ZeroClaw Labs; ZeroClaw is a trademark of ZeroClaw Labs.
 
 ```kotlin
-// settings.gradle.kts: repositories { mavenCentral(); maven("https://jitpack.io") }
+// settings.gradle.kts: repositories { mavenCentral() }
 dependencies {
-    implementation("com.github.RustLangLatam:zeroclaw-api-client-kotlin:v0.1.0")
+    implementation("io.github.rustlanglatam:zeroclaw-api-client:0.1.0")
 }
 ```
-
-Until the library is on Maven Central (as
-`io.github.rustlanglatam:zeroclaw-api-client`), JitPack builds it from the
-release tag.
 
 ```kotlin
 import io.github.rustlanglatam.zeroclaw.Client
@@ -128,7 +124,7 @@ ZeroClaw in terms of channels, agents and sessions instead of URLs and JSON.
 | Tests | kotlin.test on JUnit 5, OkHttp's `MockWebServer`, captured response vectors |
 | Quality | [ktlint](https://pinterest.github.io/ktlint/), warnings as errors |
 | Docs | KDoc and an [mdBook](https://rust-lang.github.io/mdBook/) book |
-| Publishing | Maven Central (Central Portal), signed; JitPack from tags |
+| Publishing | Maven Central (Central Portal), signed |
 
 ## Examples
 
