@@ -1,0 +1,4 @@
+Copyright 2026 RustLangLatam
+
+A Kotlin client for the ZeroClaw gateway HTTP API (https://github.com/zeroclaw-labs/zeroclaw).
+ZeroClaw is developed by ZeroClaw Labs; this project is not affiliated with it.
