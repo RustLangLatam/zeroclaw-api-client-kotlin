@@ -2,21 +2,19 @@
 
 ## Install
 
-The library is `io.github.rustlanglatam:zeroclaw-api-client`. Until it is on
-Maven Central, take it from JitPack, which builds the tagged release:
+The library is `io.github.rustlanglatam:zeroclaw-api-client` on Maven Central:
 
 ```kotlin
 // settings.gradle.kts
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-        maven("https://jitpack.io")
     }
 }
 
 // build.gradle.kts
 dependencies {
-    implementation("com.github.RustLangLatam:zeroclaw-api-client-kotlin:v0.1.0")
+    implementation("io.github.rustlanglatam:zeroclaw-api-client:0.1.0")
 }
 ```
 
