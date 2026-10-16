@@ -30,6 +30,15 @@ jobs:
         run: |
           grep -qx "version=${GITHUB_REF_NAME#v}" gradle.properties
           grep -q "VERSION = \"${GITHUB_REF_NAME#v}\"" src/main/kotlin/io/github/rustlanglatam/zeroclaw/Version.kt
+      - name: The Maven Central secrets are set
+        env:
+          USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          KEY: ${{ secrets.SIGNING_KEY }}
+        run: |
+          if [ -z "$USERNAME" ] || [ -z "$KEY" ]; then
+            echo "::error::Set MAVEN_CENTRAL_USERNAME, MAVEN_CENTRAL_PASSWORD, SIGNING_KEY and SIGNING_KEY_PASSWORD, then re-run this job."
+            exit 1
+          fi
       - run: ./gradlew build
       - run: ./gradlew publishToMavenCentral --no-configuration-cache
         env:
