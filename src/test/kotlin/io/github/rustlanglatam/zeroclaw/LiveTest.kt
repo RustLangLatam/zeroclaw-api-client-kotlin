@@ -44,6 +44,9 @@ class LiveTest {
             check("tuis") { c.system.tuis() }
             check("logs") { c.system.logs(LogQuery(limit = 5)) }
             check("channels") { c.channels.list() }
+            for (channel in runCatching { c.channels.list() }.getOrDefault(emptyList()).take(1)) {
+                check("channels.rooms") { c.channels.rooms(channel.name) }
+            }
             check("config.status") { c.config.status() }
             check("config.sections") { c.config.sections() }
             check("config.list") { c.config.list("gateway") }

@@ -490,6 +490,36 @@ class EndpointsTest {
             ) { c -> c.webhook.a2aSend("helper", "hi") },
             Case("GET", "/a2a/helper/.well-known/agent-card.json") { c -> c.webhook.agentCard("helper") },
             Case("GET", "/.well-known/agents-card.json") { c -> c.webhook.agentCatalog() },
+            Case("POST", "/api/channels/whatsapp.main/send", body = """{"to":"+34600000000","content":"Hola","thread_id":null}""") { c ->
+                c.channels.send("whatsapp.main", "+34600000000", "Hola")
+            },
+            Case(
+                "POST",
+                "/api/channels/email.box/messages/a@b.example/redeliver",
+                reply = """{"channel":"email.box","message_id":"a@b.example","outcome":"redelivered"}""",
+                result = """{"channel":"email.box","message_id":"a@b.example","outcome":"redelivered"}""",
+            ) { c -> c.channels.redeliver("email.box", "a@b.example") },
+            Case(
+                "GET",
+                "/api/channels/whatsapp.main/rooms",
+                reply = """{"channel":"whatsapp.main","rooms":[{"id":"1203@g.us","name":"Team","participants":3}]}""",
+                result = """[{"id":"1203@g.us","name":"Team","participants":3}]""",
+            ) { c -> c.channels.rooms("whatsapp.main") },
+            Case("POST", "/api/channels/whatsapp.main/rooms", body = """{"name":"Team","topic":null,"invites":["+34600000000"]}""") { c ->
+                c.channels.createRoom("whatsapp.main", "Team", null, listOf("+34600000000"))
+            },
+            Case(
+                "GET",
+                "/api/channels/whatsapp.main/rooms/1203@g.us/members",
+                reply = """{"members":[{"id":"+34600000000","admin":true}]}""",
+                result = """[{"id":"+34600000000","admin":true}]""",
+            ) { c -> c.channels.roomMembers("whatsapp.main", "1203@g.us") },
+            Case("POST", "/api/channels/whatsapp.main/rooms/1203@g.us/invites", body = """{"user":"+34611111111"}""") { c ->
+                c.channels.invite("whatsapp.main", "1203@g.us", "+34611111111")
+            },
+            Case("DELETE", "/api/channels/whatsapp.main/rooms/1203@g.us/members/+34611111111") { c ->
+                c.channels.removeMember("whatsapp.main", "1203@g.us", "+34611111111")
+            },
         )
 
     @Test
@@ -528,7 +558,7 @@ class EndpointsTest {
             }
         }
         if (failures.isNotEmpty()) fail(failures.joinToString("\n"))
-        assertEquals(142, cases.size)
+        assertEquals(149, cases.size)
     }
 
     @Test
@@ -580,5 +610,13 @@ class EndpointsTest {
                 ),
             )
             assertEquals(JsonPrimitive(1), obj("1"))
+        }
+
+    @Test
+    fun `a message the gateway no longer keeps is not found`() =
+        Gateway().use { gw ->
+            gw.json("""{"channel":"email.box","error":"message not kept"}""", status = 404)
+            val e = runCatching { runBlocking { gw.client.channels.redeliver("email.box", "gone") } }.exceptionOrNull()
+            assertTrue(e != null && e.isNotFound, "$e")
         }
 }
