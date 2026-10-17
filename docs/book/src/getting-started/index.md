@@ -14,7 +14,7 @@ dependencyResolutionManagement {
 
 // build.gradle.kts
 dependencies {
-    implementation("io.github.rustlanglatam:zeroclaw-api-client:0.1.0")
+    implementation("io.github.rustlanglatam:zeroclaw-api-client:0.1.1")
 }
 ```
 

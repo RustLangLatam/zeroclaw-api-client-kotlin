@@ -37,7 +37,7 @@ Android API 26+, and Java code can use it too.
 ```kotlin
 // settings.gradle.kts: repositories { mavenCentral() }
 dependencies {
-    implementation("io.github.rustlanglatam:zeroclaw-api-client:0.1.0")
+    implementation("io.github.rustlanglatam:zeroclaw-api-client:0.1.1")
 }
 ```
 
