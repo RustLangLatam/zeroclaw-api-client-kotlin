@@ -1,0 +1,25 @@
+{
+ "build": "0.8.5",
+ "response": {
+  "entries": [
+   {
+    "agent_alias": "owner",
+    "agent_id": "00000000-0000-0000-0000-000000000000",
+    "category": "core",
+    "content": "Likes jazz",
+    "id": "00000000-0000-0000-0000-000000000000",
+    "importance": 0.5,
+    "key": "favorite_music",
+    "kind": null,
+    "namespace": "default",
+    "pinned": false,
+    "score": null,
+    "session_id": null,
+    "superseded_by": null,
+    "tenant_id": null,
+    "timestamp": "2026-10-08T22:39:55.029403393+00:00"
+   }
+  ]
+ },
+ "route": "/api/memory"
+}
