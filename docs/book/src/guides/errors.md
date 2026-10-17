@@ -9,7 +9,7 @@ care about:
 | `TransportException` | No HTTP answer: connection refused, DNS or TLS failure, a broken connection. Its `cause` is OkHttp's `IOException`. |
 | `RequestTimeoutException` | The gateway did not answer in time, after any retries. |
 | `DecodeException` | A successful answer did not have the expected shape (a required field missing, a wrong type). |
-| `WebSocketException` | A WebSocket failed, or its handshake was refused (the status is in the message). |
+| `WebSocketException` | A WebSocket failed, or its handshake was refused (the HTTP status is in `status`). |
 | `TurnException` (`code`) | A chat turn ended in an `error` frame, or was aborted (`ABORTED`). |
 | `InvalidUrlException` | The base URL is not an absolute `http`/`https` URL (thrown by the constructor). |
 

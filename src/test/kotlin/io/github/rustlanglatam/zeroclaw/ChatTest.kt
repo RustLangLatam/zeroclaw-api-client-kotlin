@@ -111,10 +111,12 @@ class ChatTest {
         }
 
     @Test
-    fun `a refused handshake is a WebSocketException naming the status`() =
+    fun `a refused handshake is a WebSocketException carrying the status`() =
         Gateway().use { gw ->
             gw.json("""{"error":"unauthorized"}""", status = 401)
             val e = assertFailsWith<WebSocketException> { runBlocking { gw.client.chat("helper") } }
+            assertEquals(401, e.status)
+            assertTrue(e.isUnauthorized)
             assertTrue(e.message!!.contains("401"), e.message)
         }
 

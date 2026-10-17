@@ -48,6 +48,8 @@ class DecodeException(
 class WebSocketException(
     message: String,
     cause: Throwable? = null,
+    /** The HTTP status of a refused handshake (e.g. 401), or 0 when there was none. */
+    val status: Int = 0,
 ) : ZeroClawException(message, cause)
 
 /**
@@ -97,8 +99,14 @@ class TurnException(
     message: String,
 ) : ZeroClawException("agent turn failed: $message")
 
-/** The HTTP status of an [ApiException], or 0 for any other error. */
-val Throwable.statusCode: Int get() = (this as? ApiException)?.status ?: 0
+/** The HTTP status of an [ApiException] or of a refused WebSocket handshake, or 0 for any other error. */
+val Throwable.statusCode: Int
+    get() =
+        when (this) {
+            is ApiException -> status
+            is WebSocketException -> status
+            else -> 0
+        }
 
 /** Whether the gateway answered 404 (the resource does not exist). */
 val Throwable.isNotFound: Boolean get() = statusCode == 404
@@ -119,6 +127,7 @@ val Throwable.isTransient: Boolean
     get() =
         when (this) {
             is ApiException -> status in RETRYABLE_STATUSES
+            is WebSocketException -> status in RETRYABLE_STATUSES
             is TransportException, is RequestTimeoutException -> true
             else -> false
         }

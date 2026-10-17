@@ -328,7 +328,8 @@ class Feed internal constructor(
  * subprotocol and the bearer token (in `Sec-WebSocket-Protocol` as
  * `bearer.<token>`, and as an `Authorization` header). The client's timeout
  * bounds the handshake. A refused handshake (401 without a valid token, 400
- * for an unknown agent) is a [WebSocketException] naming the status.
+ * for an unknown agent) is a [WebSocketException] whose `status` (and
+ * [statusCode]) is the HTTP status.
  */
 internal suspend fun openSocket(
     client: Client,
@@ -390,7 +391,7 @@ internal suspend fun openSocket(
                             } else {
                                 (t.message ?: "connection failed")
                             }
-                        opened.completeExceptionally(WebSocketException("websocket error: $reason", t))
+                        opened.completeExceptionally(WebSocketException("websocket error: $reason", t, status ?: 0))
                     }
                     incoming.close(WebSocketException("websocket error: connection lost", t))
                 }
