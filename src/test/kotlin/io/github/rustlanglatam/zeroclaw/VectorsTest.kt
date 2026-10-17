@@ -35,6 +35,7 @@ class VectorsTest {
             Triple("health", null) { c -> c.system.health() },
             Triple("integration_settings", "settings") { c -> c.system.integrationSettings() },
             Triple("integrations", "integrations") { c -> c.system.integrations() },
+            Triple("memory_list", "entries") { c -> c.memory.search() },
             Triple("personality_files", null) { c -> c.agent(agent).personalityFiles() },
             Triple("quickstart_state", null) { c -> c.quickstart.state() },
             Triple("runtime_health", "health") { c -> c.system.runtimeHealth() },

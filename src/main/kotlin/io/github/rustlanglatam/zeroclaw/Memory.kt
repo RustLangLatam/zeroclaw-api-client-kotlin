@@ -24,8 +24,8 @@ data class MemoryEntry(
     val score: Double? = null,
     /** The namespace. */
     val namespace: String? = null,
-    /** The importance. */
-    val importance: Long? = null,
+    /** The importance, from 0.0 to 1.0 (`MemoryEntry::importance`, an `f64` in the gateway). */
+    val importance: Double? = null,
     /** The entry that replaced it. */
     val supersededBy: String? = null,
     /** `"episodic"`, `"procedural"` or `{"semantic": "fact" | …}`. */
